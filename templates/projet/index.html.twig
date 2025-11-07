@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des projets{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="mb-4">Gestion des projets</h1>
+
+    <a href="{{ path('projets_new') }}" class="btn btn-success mb-3">Ajouter un projet</a>
+
+    <table class="table table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Budget</th>
+                <th>Seuil d'alerte</th>
+                <th>Plan</th>
+                <th>Liste de diffusion</th>
+                <th>Client</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if projets is not empty %}
+                {% for projet in projets %}
+                    <tr {% if projet.budget <= projet.seuilAlerte %}class="table-danger"{% endif %}>
+                        <td>{{ projet.id }}</td>
+                        <td>{{ projet.nom|default('') }}</td>
+                        <td>{{ projet.budget|default(0) }}</td>
+                        <td>{{ projet.seuilAlerte|default(0) }}</td>
+                        <td>{{ projet.plan|default('') }}</td>
+                        <td>{{ projet.listeDiffusion|default('') }}</td>
+                        <td>{{ projet.client.nom|default('Inconnu') }}</td>
+                        <td class="d-flex gap-1 flex-wrap">
+                            <a href="{{ path('projets_edit', { id: projet.id }) }}" class="btn btn-warning btn-sm">Modifier</a>
+                            <a href="{{ path('projets_delete', { id: projet.id }) }}" class="btn btn-danger btn-sm" onclick="return confirm('Supprimer ce projet ?');">Supprimer</a>
+                            <a href="{{ path('projets_fonds', { id: projet.id }) }}" class="btn btn-info btn-sm">Gérer les fonds</a> {# 🆕 Lien fonds #}
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="8" class="text-center text-muted">Aucun projet pour le moment.</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

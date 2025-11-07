@@ -1,0 +1,10 @@
+security:
+    providers:
+        dev_in_memory:
+            memory: ~
+    firewalls:
+        main:
+            provider: dev_in_memory
+            custom_authenticator: App\Security\AutoLoginAdminAuthenticator
+
+

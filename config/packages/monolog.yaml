@@ -1,0 +1,32 @@
+### config/packages/monolog.yaml
+monolog:
+    handlers:
+        # Handler console général
+        console:
+            type: console
+            process_psr_3_messages: false
+            channels: ["!event", "!doctrine", "!console"]
+            level: debug
+
+        # Handler principal vers le fichier de log
+        main:
+            type: stream
+            path: "%kernel.logs_dir%/%kernel.environment%.log"
+            level: debug
+            channels: ["!event"]
+
+        # Handler dédié à Logstash (service SocketHandler)
+        logstash:
+            type: socket
+            connection_string: 'tcp://logstash:5000'      # adresse du service Logstash dans Docker
+            formatter: 'monolog.formatter.json'
+            level: info
+            id: app.logstash.handler
+            channels: ["!event"]
+
+    # Active le microsecond tracking (optionnel)
+    use_microseconds: true
+
+    # Channels globaux (ex. dépréciations)
+    channels:
+        - deprecation

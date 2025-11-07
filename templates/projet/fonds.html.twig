@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Appels de fonds - {{ projet.nom }}{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1>Appels de fonds pour le projet <strong>{{ projet.nom }}</strong></h1>
+
+    <a href="{{ path('projets_index') }}" class="btn btn-secondary mb-3">← Retour à la liste des projets</a>
+
+    <h2 class="h4 mt-4">Ajouter un nouvel appel de fonds</h2>
+    {{ form_start(form) }}
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                {{ form_label(form.dateEmission) }}
+                {{ form_widget(form.dateEmission, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="col-md-4 mb-3">
+                {{ form_label(form.datePaiement) }}
+                {{ form_widget(form.datePaiement, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="col-md-4 mb-3">
+                {{ form_label(form.montant) }}
+                {{ form_widget(form.montant, {'attr': {'class': 'form-control', 'placeholder': 'Montant en €'}}) }}
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Ajouter</button>
+    {{ form_end(form) }}
+
+    <h2 class="h4 mt-5">Historique des appels de fonds</h2>
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>Date d'émission</th>
+                <th>Date de paiement</th>
+                <th>Montant</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for fonds in projet.appelDeFonds %}
+                <tr>
+                    <td>{{ fonds.dateEmission ? fonds.dateEmission|date('d/m/Y') : 'Non définie' }}</td>
+                    <td>{{ fonds.datePaiement ? fonds.datePaiement|date('d/m/Y') : 'Non définie' }}</td>
+                    <td>{{ fonds.montant|number_format(2, ',', ' ') }} €</td>
+                    <td class="d-flex gap-1">
+                        <a href="{{ path('projets_fonds_edit', { id: fonds.id }) }}" class="btn btn-sm btn-outline-warning" title="Modifier">
+                            ✏️
+                        </a>
+                        <a href="{{ path('projets_fonds_delete', { id: fonds.id }) }}" class="btn btn-sm btn-outline-danger" title="Supprimer" onclick="return confirm('Supprimer cet appel de fonds ?');">
+                            🗑️
+                        </a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4" class="text-center text-muted">Aucun appel de fonds trouvé pour ce projet.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

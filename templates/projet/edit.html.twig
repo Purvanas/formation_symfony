@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier un projet{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1>Modifier un projet</h1>
+
+    {{ form_start(form) }}
+        <div class="mb-3">
+            {{ form_label(form.nom) }}
+            {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(form.budget) }}
+            {{ form_widget(form.budget, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(form.seuilAlerte) }}
+            {{ form_widget(form.seuilAlerte, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(form.plan) }}
+            {{ form_widget(form.plan, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(form.listeDiffusion) }}
+            {{ form_widget(form.listeDiffusion, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(form.client) }}
+            {{ form_widget(form.client, {'attr': {'class': 'form-select'}}) }}
+        </div>
+
+    {{ form_end(form) }}
+
+    <a href="{{ path('projets_index') }}" class="btn btn-secondary mt-3">Retour</a>
+</div>
+{% endblock %}

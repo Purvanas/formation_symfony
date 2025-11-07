@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier un appel de fond{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="mb-4">Modifier un appel de fond</h1>
+
+    {{ form_start(form) }}
+        <div class="mb-3">
+            {{ form_label(form.montant) }}
+            {{ form_widget(form.montant, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(form.dateEmission) }}
+            {{ form_widget(form.dateEmission, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(form.datePaiement) }}
+            {{ form_widget(form.datePaiement, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    {{ form_end(form) }}
+
+    <a href="{{ path('projets_index') }}" class="btn btn-secondary mt-3">Retour</a>
+</div>
+{% endblock %}

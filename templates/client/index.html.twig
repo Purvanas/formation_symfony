@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des clients{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="mb-4">Gestion des clients</h1>
+
+    <a href="{{ path('clients_new') }}" class="btn btn-success mb-3">Ajouter un client</a>
+
+    <table class="table table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>SIREN</th>
+                <th>IBAN</th>
+                <th>Adresse</th>
+                <th>Contact Facturation</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for client in clients %}
+                <tr>
+                    <td>{{ client.id }}</td>
+                    <td>{{ client.nom }}</td>
+                    <td>{{ client.siren }}</td>
+                    <td>{{ client.iban }}</td>
+                    <td>{{ client.adresse }}</td>
+                    <td>{{ client.contactFacturation }}</td>
+                    <td>
+                        <a href="{{ path('clients_edit', { id: client.id }) }}" class="btn btn-warning btn-sm">Modifier</a>
+                        <a href="{{ path('clients_delete', { id: client.id }) }}" class="btn btn-danger btn-sm" onclick="return confirm('Supprimer ce client ?');">Supprimer</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
