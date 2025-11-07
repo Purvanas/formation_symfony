@@ -3,43 +3,52 @@
 {% block title %}Accueil{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { 
-        margin: 1em auto; 
-        max-width: 800px; 
-        width: 95%; 
-        font: 18px/1.5 sans-serif; 
-    }
-    .example-wrapper code { 
-        background: #F5F5F5; 
-        padding: 2px 6px; 
-    }
-</style>
+<div class="py-5">
+    <div class="p-5 mb-4 bg-white rounded-3 shadow-sm">
+        <div class="container-fluid py-5">
+            <h1 class="display-5 fw-bold">Gestion de formations simplifiée 🎓</h1>
+            <p class="col-md-8 fs-5 mt-3">
+                Organisez vos projets, suivez vos clients et planifiez vos sessions en toute simplicité.
+            </p>
+            <div class="mt-4 d-flex gap-2">
+                <a href="{{ path('projets_index') }}" class="btn btn-primary btn-lg">Voir les projets</a>
+                <a href="{{ path('clients_index') }}" class="btn btn-outline-secondary btn-lg">Gérer les clients</a>
+            </div>
+        </div>
+    </div>
 
-<div class="container mt-5">
-    <div class="example-wrapper">
-        <h1 class="mb-4">Bienvenue sur la plateforme de gestion de formations 🎓</h1>
-
-        <p>
-            Cette application permet d’organiser efficacement des <strong>formations professionnelles</strong> pour les entreprises.
-        </p>
-
-        <p>
-            Le fonctionnement est simple :
-        </p>
-
-        <ul>
-            <li>🧑‍💼 Des entreprises nous contactent pour former leurs employés</li>
-            <li>📋 Nous recueillons leurs besoins</li>
-            <li>📚 Nous organisons des sessions de formation adaptées (sur tout type de sujet)</li>
-            <li>✅ Suivi, gestion et planification directement via cette application</li>
-        </ul>
-
-        <p>
-            Que vous soyez chargé de projets ou client, tout est centralisé ici pour une gestion simple et rapide.
-        </p>
-
-        <hr>
+    <div class="row g-4">
+        <div class="col-12 col-md-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">📋 Projets</h5>
+                    <p class="card-text">Créez, suivez et pilotez vos projets de formation.</p>
+                    <a href="{{ path('projets_index') }}" class="stretched-link">Accéder</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">🧑‍💼 Clients</h5>
+                    <p class="card-text">Centralisez vos comptes clients et leurs demandes.</p>
+                    <a href="{{ path('clients_index') }}" class="stretched-link">Accéder</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">🔐 Accès</h5>
+                    <p class="card-text">Connectez-vous pour accéder aux fonctionnalités avancées.</p>
+                    {% if app.user %}
+                        <span class="badge text-bg-success">Connecté</span>
+                    {% else %}
+                        <a href="{{ path('app_login') }}" class="stretched-link">Se connecter</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

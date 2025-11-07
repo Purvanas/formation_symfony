@@ -5,7 +5,8 @@
 {% block body %}
 <div class="container d-flex justify-content-center align-items-center vh-100">
     <div class="card shadow p-4" style="width: 100%; max-width: 400px;">
-        <h2 class="text-center mb-4">Se connecter</h2>
+        <h2 class="text-center mb-2">Se connecter</h2>
+        <p class="text-center text-muted mb-4">Accédez à votre espace de gestion.</p>
 
         {% if error %}
             <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -41,7 +42,9 @@
             <button class="btn btn-primary w-100" type="submit">Se connecter</button>
         </form>
 
-
+        <div class="text-center mt-3">
+            <a href="{{ path('app_home') }}" class="text-decoration-none">← Retour à l’accueil</a>
+        </div>
     </div>
 </div>
 {% endblock %}
