@@ -46,5 +46,11 @@
             {% endif %}
         </tbody>
     </table>
+
+    <div class="d-flex gap-2 mt-3">
+        <a href="{{ path('projets_export_send') }}" class="btn btn-primary">
+            Exporter en PDF et envoyer par e-mail
+        </a>
+    </div>
 </div>
 {% endblock %}

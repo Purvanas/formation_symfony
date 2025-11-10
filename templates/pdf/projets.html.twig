@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <title>{{ title|default('Gestion des projets') }}</title>
+    <style>
+        body { font-family: DejaVu Sans, Arial, sans-serif; color: #222; }
+        h1 { font-size: 20px; margin: 0 0 10px; }
+        .meta { font-size: 12px; color: #666; margin-bottom: 12px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ccc; padding: 8px; font-size: 12px; }
+        th { background: #f3f3f3; text-align: left; }
+        .danger { background: #fde2e2; }
+    </style>
+</head>
+<body>
+    <h1>{{ title|default('Gestion des projets') }}</h1>
+    <div class="meta">Généré le {{ (generatedAt|default('now'))|date('d/m/Y H:i') }}</div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Budget</th>
+                <th>Seuil d'alerte</th>
+                <th>Plan</th>
+                <th>Liste de diffusion</th>
+                <th>Client</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for projet in projets %}
+                <tr class="{% if projet.budget <= projet.seuilAlerte %}danger{% endif %}">
+                    <td>{{ projet.id }}</td>
+                    <td>{{ projet.nom|default('') }}</td>
+                    <td>{{ projet.budget|default(0) }}</td>
+                    <td>{{ projet.seuilAlerte|default(0) }}</td>
+                    <td>{{ projet.plan|default('') }}</td>
+                    <td>{{ projet.listeDiffusion|default('') }}</td>
+                    <td>{{ projet.client.nom|default('Inconnu') }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7">Aucun projet</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+
+

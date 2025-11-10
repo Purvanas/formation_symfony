@@ -12,6 +12,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+use App\Service\PdfService;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[Route('/projets', name: 'projets_')]
 class ProjetController extends AbstractController
@@ -24,6 +28,31 @@ class ProjetController extends AbstractController
         return $this->render('projet/index.html.twig', [
             'projets' => $projets,
         ]);
+    }
+
+    #[Route('/export-send', name: 'export_send', methods: ['GET'])]
+    public function exportAndSend(ProjetRepository $projetRepository, PdfService $pdfService, MailerInterface $mailer): Response
+    {
+        $projets = $projetRepository->findAll();
+
+        $pdfBinary = $pdfService->renderPdf('pdf/projets.html.twig', [
+            'projets' => $projets,
+            'title' => 'Gestion des projets',
+            'generatedAt' => new \DateTimeImmutable(),
+        ]);
+
+        $recipient = $this->resolveRecipientEmail();
+
+        $email = new Email();
+        $email->from('noreply@example.com');
+        $email->to($recipient);
+        $email->subject('Tableau des projets (PDF)');
+        $email->html('<p>Veuillez trouver en pièce jointe le PDF du tableau des projets.</p>');
+        $email->attach($pdfBinary, 'projets.pdf', 'application/pdf');
+
+        $mailer->send($email);
+
+        return $this->redirectToRoute('projets_index');
     }
 
     #[Route('/new', name: 'new')]
